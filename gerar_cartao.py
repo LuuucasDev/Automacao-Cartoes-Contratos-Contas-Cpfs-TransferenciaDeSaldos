@@ -15,16 +15,23 @@ class GerarCartao:
         self.usuario = usuario
         self.senha = senha
 
-    def _gerar_dados_cartao(self, tipo):
-        """Gera dados aleatórios para um cartão."""
+    def _gerar_dados_comuns(self):
+        """Gera dados aleatórios compartilhados entre PAT e PJ (CPF, contrato, empresa)."""
+        return {
+            "cpf": str(random.randint(10000000000, 99999999999)),  # Gerar CPF aleatório
+            "contrato": str(random.randint(100000, 999999)),  # Gerar contrato aleatório
+            "empresa": str(random.randint(10000000000000, 99999999999999)),  # Gerar CNPJ aleatório
+        }
+
+    def _gerar_dados_cartao(self, tipo, dados_comuns):
+        """Gera dados aleatórios para um cartão, incluindo saldo aleatório e usando dados comuns para CPF, contrato e empresa."""
+        saldo = round(random.uniform(50.00, 1000.00), 2)  # Saldo aleatório entre 50 e 1000, com 2 casas decimais
         return {
             "tipo": tipo,
             "numero_cartao": "".join([str(random.randint(0, 9)) for _ in range(16)]),
             "conta": str(random.randint(100000, 999999)),
-            "cpf": "34304437682",
-            "contrato": "123479",
-            "empresa": "18744523000108",
-            "saldo": 190.00
+            "saldo": saldo,  # Saldo aleatório para cada cartão
+            **dados_comuns  # Adiciona os dados comuns (CPF, contrato, empresa)
         }
 
     def _realizar_login(self, driver):
@@ -41,7 +48,7 @@ class GerarCartao:
         logging.info("Login realizado com sucesso!")
 
     def gerar_cartao(self, tipo):
-        """Gera um cartão do tipo especificado."""
+        """Gera um cartão do tipo especificado, utilizando dados fixos para CPF, contrato e empresa, e saldo aleatório."""
         logging.info(f"Iniciando geração de cartão do tipo {tipo}.")
         chrome_options = Options()
         chrome_options.add_argument("--start-maximized")
@@ -52,8 +59,11 @@ class GerarCartao:
             self._realizar_login(driver)
             driver.get(self.url_menu)
 
-            # Gera dados do cartão
-            dados_cartao = self._gerar_dados_cartao(tipo)
+            # Gera os dados aleatórios (CPF, contrato, empresa) uma vez
+            dados_comuns = self._gerar_dados_comuns()
+
+            # Gera os dados do cartão específicos para o tipo, incluindo saldo aleatório
+            dados_cartao = self._gerar_dados_cartao(tipo, dados_comuns)
 
             # Simula o preenchimento no site
             driver.find_element(By.ID, "campo_tipo").send_keys(dados_cartao["tipo"])

@@ -2,6 +2,7 @@ import json
 import logging
 from dotenv import load_dotenv
 import os
+import random
 from gerar_cartao import GerarCartao
 from transferir_saldo import TransferirSaldo
 
@@ -22,7 +23,6 @@ URL_MENU = os.getenv("URL_MENU")
 USUARIO = os.getenv("USUARIO")
 SENHA = os.getenv("SENHA")
 API_URL = os.getenv("API_URL")
-VALOR_TRANSFERENCIA = 50.00
 
 def main():
     # Inicializar a classe de geração de cartões
@@ -41,10 +41,18 @@ def main():
 
     logging.info("Cartões gerados e salvos com sucesso!")
 
+    # Escolher aleatoriamente os cartões de origem e destino
+    cartao_origem, cartao_destino = random.sample([cartao_pj, cartao_pat], 2)
+    
+    # Escolher um valor de transferência aleatório dentro do saldo do cartão de origem
+    valor_transferencia = round(random.uniform(1.00, cartao_origem["saldo"]), 2)
+
+    logging.info(f"Transferindo R${valor_transferencia} de {cartao_origem['numero_cartao']} para {cartao_destino['numero_cartao']}.")
+
     # Transferência de saldo entre cartões
     logging.info("Iniciando transferência de saldo...")
     transferir_saldo = TransferirSaldo(API_URL)
-    response = transferir_saldo.transferir_saldo(cartao_pat, cartao_pj, VALOR_TRANSFERENCIA)
+    response = transferir_saldo.transferir_saldo(cartao_origem, cartao_destino, valor_transferencia)
 
     # Salvar os saldos atualizados
     with open("cartao_pj_atualizado.txt", "w") as pj_atualizado:
