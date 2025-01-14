@@ -1,0 +1,35 @@
+2025-01-14 17:32:04,788 - INFO - Gerando cartões...
+2025-01-14 17:32:07,171 - INFO - Iniciando geração de cartão do tipo PJ.
+2025-01-14 17:32:17,065 - INFO - Realizando login no site FVS.
+2025-01-14 17:32:59,347 - ERROR - Erro ao gerar cartão do tipo PJ: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=131.0.6778.265)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7F4B980D5+2992373]
+	(No symbol) [0x00007FF7F482BFD0]
+	(No symbol) [0x00007FF7F46C590A]
+	(No symbol) [0x00007FF7F46C3061]
+	(No symbol) [0x00007FF7F46B3BD9]
+	(No symbol) [0x00007FF7F46B592F]
+	(No symbol) [0x00007FF7F46B3E9F]
+	(No symbol) [0x00007FF7F46B371D]
+	(No symbol) [0x00007FF7F46B363A]
+	(No symbol) [0x00007FF7F46B1251]
+	(No symbol) [0x00007FF7F46B1B1C]
+	(No symbol) [0x00007FF7F46C89DA]
+	(No symbol) [0x00007FF7F476038E]
+	(No symbol) [0x00007FF7F473F36A]
+	(No symbol) [0x00007FF7F475F584]
+	(No symbol) [0x00007FF7F473F113]
+	(No symbol) [0x00007FF7F470A918]
+	(No symbol) [0x00007FF7F470BA81]
+	GetHandleVerifier [0x00007FF7F4BF6A2D+3379789]
+	GetHandleVerifier [0x00007FF7F4C0C32D+3468109]
+	GetHandleVerifier [0x00007FF7F4C00043+3418211]
+	GetHandleVerifier [0x00007FF7F498C78B+847787]
+	(No symbol) [0x00007FF7F483757F]
+	(No symbol) [0x00007FF7F4832FC4]
+	(No symbol) [0x00007FF7F483315D]
+	(No symbol) [0x00007FF7F4822979]
+	BaseThreadInitThunk [0x00007FF96F5EE8D7+23]
+	RtlUserThreadStart [0x00007FF97161FBCC+44]
+
